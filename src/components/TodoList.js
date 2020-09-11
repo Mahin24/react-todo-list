@@ -1,17 +1,16 @@
 import React, { Component } from "react";
 import TodoItem from "./TodoItem";
-
 export default class TodoList extends Component {
   render() {
     const { items, clearList, handleDelete, handleEdit } = this.props;
     return (
       <ul className="list-group my-5">
-        <h3 className="text-capitalize text-center">Todo List</h3>
+        <h3 className="text-capitalize text-center">todo list</h3>
         {items.map((item) => {
           return (
             <TodoItem
               key={item.id}
-              item={item.title}
+              title={item.title}
               handleDelete={() => handleDelete(item.id)}
               handleEdit={() => handleEdit(item.id)}
             />
@@ -22,7 +21,7 @@ export default class TodoList extends Component {
           className="btn btn-danger btn-block text-uppercase mt-5"
           onClick={clearList}
         >
-          Clear List
+          clear list
         </button>
       </ul>
     );

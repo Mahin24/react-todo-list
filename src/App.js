@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import TodoInput from "./components/TodoInput";
-import TodoList from "./components/TodoList";
 import { v4 as uuid } from "uuid";
 import "bootstrap/dist/css/bootstrap.min.css";
-//My First project and also i setup github
+import TodoInput from "./components/TodoInput";
+import TodoList from "./components/TodoList";
 class App extends Component {
   state = {
     items: [],
@@ -11,7 +10,6 @@ class App extends Component {
     item: "",
     editItem: false,
   };
-
   handleChange = (e) => {
     this.setState({
       item: e.target.value,
@@ -24,37 +22,46 @@ class App extends Component {
       title: this.state.item,
     };
     const updatedItems = [...this.state.items, newItem];
-    this.setState(
-      {
-        items: updatedItems,
-        item: "",
-        id: uuid(),
-        editItem: false,
-      },
-      () => console.log(this.state)
-    );
+
+    this.setState({
+      items: updatedItems,
+      item: "",
+      id: uuid(),
+      editItem: false,
+    });
   };
   clearList = () => {
-    console.log("clear list");
+    this.setState({
+      items: [],
+    });
   };
   handleDelete = (id) => {
-    console.log(`handle delete ${id}`);
+    const filteredItems = this.state.items.filter((item) => item.id !== id);
+    this.setState({
+      items: filteredItems,
+    });
   };
   handleEdit = (id) => {
-    console.log(`handle edit ${id}`);
+    const filteredItems = this.state.items.filter((item) => item.id !== id);
+    const selectedItem = this.state.items.find((item) => item.id === id);
+    this.setState({
+      items: filteredItems,
+      item: selectedItem.title,
+      id: id,
+      editItem: true,
+    });
   };
-
   render() {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-10 mx-auto col-md-8 mt-4">
-            <h3 className="text-capitalize text-center">TodoInput</h3>
+          <div className="col-10 mx-auto col-md-8 mt-5">
+            <h3 className="text-capitalize text-center">todo input</h3>
             <TodoInput
               item={this.state.item}
               handleChange={this.handleChange}
               handleSubmit={this.handleSubmit}
-              editItem={this.editItem}
+              editItem={this.state.editItem}
             />
             <TodoList
               items={this.state.items}
